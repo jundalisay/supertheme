@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="{{ site.LanguageCode | default `en-US` }}">
+
+<head>
+  {{ partial "head.html" . }}
+
+  {{ if hugo.IsProduction }}
+  {{ partialCached "style.html" . }}
+  {{ else }}
+  {{ partial "style.html" . }}
+  {{ end }} 
+
+  {{ if or (eq .Section "articles") (eq .Section "solutions") (eq .Section "analysis") (eq .Section "research") }} 
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2557957536703477"
+     crossorigin="anonymous"></script>
+  {{ end }}
+
+  <!-- Tawk.to is only for the app-->
+  <script type="text/javascript">
+    var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+    (function(){
+    var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+    s1.async=true;
+    s1.src='https://embed.tawk.to/60eed2dbd6e7610a49ab3c35/1faiefb5d';
+    s1.charset='UTF-8';
+    s1.setAttribute('crossorigin','*');
+    s0.parentNode.insertBefore(s1,s0);
+    })();
+  </script>
+  <!--End of Tawk.to Script-->  
+</head>
+
+
+<body>
+
+<!--   <div id="fb-root"></div>
+  <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v11.0&appId=330490662103544&autoLogAppEvents=1" nonce="KhOnPLEo"></script> -->
+
+  {{ if hugo.IsProduction }}
+  {{ partialCached "preloader.html" . }}
+  {{ partialCached "header.html" . }}
+  {{ else }}
+  {{ partial "preloader.html" . }}
+  {{ partial "header.html" . }}
+  {{ end }}
+
+  <main>
+    {{ block "main" . }}{{ end }}
+  </main>
+
+  {{ if hugo.IsProduction }}
+  {{ partialCached "footer.html" . }}
+  {{ partialCached "script.html" . }}
+  {{ else }}
+  {{ partial "footer.html" . }}
+  {{ partial "script.html" . }}
+  {{ end }}
+</body>
+
+</html>

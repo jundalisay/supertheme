@@ -1,0 +1,26 @@
+[readmore]
+other = "Read more"
+
+[translations]
+other= "Translations"
+
+[error404]
+other = "This page has moved! Please enter the page title at the search box above to get the new location."
+
+[yourname]
+other = "Your Name"
+
+[yourcity]
+other = "Your city"
+
+[youremail]
+other = "Your E-mail"
+
+[subject]
+other = "Subject"
+
+[yourmessage]
+other = "Your Message"
+
+[sendnow]
+other = "Send Now"

@@ -1,0 +1,47 @@
+{{ define "main" }}
+{{ partial "page-header.html" . }}
+
+{{ with .Params.news }}
+<!-- <section class="section">
+  <div class="container card-columns">
+      {{ range .item }}      
+        <div class="card shadow p-4">        
+          <small class="text-primary">{{ .date }}</small>
+          <h3>{{ .title | markdownify }}</h3>
+          <p>{{ .content | markdownify }}</p>
+          <a href="{{.Permalink}}" title="{{ i18n "readmore" }} - {{ .Title }}" class="btn btn-primary btn-sm">{{ i18n "readmore" }}</a>          
+        </div>
+      {{ end }}
+  </div>
+</section> -->
+{{ end }}
+
+
+<div class="p-4 row mb-5">
+  {{ $paginator := .Paginate .Data.Pages }}
+  {{ range $paginator.Pages }}
+  <div class="col-lg-4 col-sm-6 mb-5">
+    <div class="card shadow-sm p-3">
+      <img src="{{ .Params.image |relURL }}" alt="{{ .Title }}" class="card-img rounded-lg mb-4">
+      <div class="card-body p-0">
+        <h3><a href="{{ .Permalink }}" title="{{ .Title }}" class="post-title">{{ .Title }}</a></h3>
+        {{ with .Params.date }}
+          <small class="text-primary">{{ .Format "January 2, 2006" }}</small>
+        {{ end }}         
+        <p class="card-text">{{ .Summary }}</p>
+        <a href="{{.Permalink}}" title="{{ i18n "readmore" }} - {{ .Title }}" class="btn btn-primary btn-sm">{{ i18n "readmore" }}</a>
+      </div>
+    </div>
+  </div>
+  {{ end }}
+</div>
+
+<div class="col-12 mb-5">
+  {{ template "_internal/pagination.html" . }}
+</div>
+
+<!-- call to action -->
+
+<!-- /call to action -->
+
+{{ end }}

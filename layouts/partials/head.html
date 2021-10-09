@@ -1,0 +1,126 @@
+<meta charset="utf-8">
+<title>{{.Title | default site.Title}}</title>
+<meta name="description" content="{{ .Description }}"/>
+<!-- base url -->
+{{ if or (eq site.BaseURL "/") (eq site.BaseURL "http://localhost:1313/") (eq site.BaseURL "http://superphysics.one/") }}{{else}}
+<base href="{{ site.BaseURL }}">
+{{ end }}
+
+<!-- multilingual SEO optimizations -->
+{{ if .IsTranslated }}
+{{ range .AllTranslations }}
+<link rel="alternate" hreflang="{{.Lang}}" href="{{ .RelPermalink | absLangURL }}">
+{{ end }}
+<link rel="alternate" hreflang="x-default" href="{{ .RelPermalink | absLangURL }}">
+{{ end }}
+{{ with site.Params.author }}
+<meta name="author" content="{{ . }}">
+{{ end }}
+{{ hugo.Generator }}
+
+
+<!-- <meta name="facebook-domain-verification" content="sq3lsl1oggojr0w1cl83nsueky4c48" /> -->
+
+<!--Favicon-->
+<link rel="shortcut icon" href="{{ site.Params.favicon | absURL }}" type="image/x-icon">
+<link rel="icon" href="{{ site.Params.favicon | absURL }}" type="image/x-icon">
+
+<!-- mobile responsive meta -->
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
+<meta name="msapplication-TileColor" content="{{site.Params.variables.primary_color | default `#da532c`}}">
+<meta name="theme-color" content="{{site.Params.variables.body_color | default `#ffffff` }}">
+
+
+{{ "<!-- Open Graph image and Twitter Card metadata -->" | safeHTML }}
+{{ $image_path := .Params.image | default site.Params.image -}}
+{{ $image_path_local :=  printf "static/%s" $image_path -}}
+{{ $image_ext := trim (path.Ext $image_path | lower) "." -}}
+{{ if fileExists $image_path_local -}}
+  <meta property="og:image" content="{{ $image_path | absURL }}" />
+  {{/* If not SVG, read image aspect ratio and define Twitter Card and Open Graph width and height  */ -}}
+  {{ if ne $image_ext "svg" -}}
+    {{ with (imageConfig $image_path_local) -}}
+    {{ if (and (gt .Width 144) (gt .Height 144)) -}}
+      <meta name="twitter:image" content="{{ $image_path | absURL }}"/>
+      <meta name="twitter:card" content="summary{{ if (and (gt .Width 300) (gt .Height 157) (not (eq .Width .Height))) }}_large_image{{ end }}">
+    {{ end -}}
+    <meta property="og:image:width" content="{{ .Width }}">
+    <meta property="og:image:height" content="{{ .Height }}">
+    {{ end -}}
+  {{ end -}}
+  <meta property="og:image:type" content="image/{{ if eq $image_ext `svg` }}svg+xml{{ else }}{{ replaceRE `^jpg$` `jpeg` $image_ext }}{{ end }}">
+{{ end -}}
+<meta name="twitter:title" content="{{ with .Title }}{{ . }}{{ else }}{{ site.Title }}{{ end }}"/>
+<meta name="twitter:description" content="{{ with .Description }}{{ . }}{{ else }}{{ if .IsPage }}{{ .Summary }}{{ else }}{{ with site.Params.description }}{{ . }}{{ end }}{{ end }}{{ end }}"/>
+{{ with site.Social.twitter -}}<meta name="twitter:site" content="@{{ . }}"/>{{ end -}}
+{{ range site.Authors }}
+  {{ with .twitter -}}<meta name="twitter:creator" content="@{{ . }}"/>{{ end -}}
+{{ end -}}
+
+{{ template "_internal/opengraph.html" . }}
+{{ template "_internal/twitter_cards.html" . }}
+
+<!-- google analytics -->
+{{ template "_internal/google_analytics.html" . }}
+
+
+{{ if .Params.Org }}
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "NGO",
+    "email": "mail(at)taonet.one",
+    "name": "Taonet One",
+    "telephone": "()",
+    "url": "https://taonet.one",
+    "logo": "https://taonet.one/icons/taonet512.png",
+    "foundingDate": "2018",
+    "founders": [
+       {
+       "@type": "Person",
+       "name": "Juan"
+       },
+       {
+       "@type": "Person",
+       "name": "Lam"
+       } 
+    ]
+  }
+</script>
+
+{{ else }}
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "author": "Taonet One",
+    "name": "{{ .Title }}",
+    "description": "{{ .Description }}",
+    "datePublished": "{{ .Date }}" 
+  }
+</script>
+{{ end }}
+
+
+<!-- <script>
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '494558894085286',
+      cookie     : true,
+      xfbml      : true,
+      version    : '{api-version}'
+    });
+    FB.AppEvents.logPageView();   
+      
+  };
+
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "https://connect.facebook.net/en_US/sdk.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+</script>
+ -->
