@@ -20,17 +20,17 @@ light = "#EDF6F5"
 # font variable
 # Give your font name from google font. add font weight using ":wght@" and separate by ";"
 # example: "Work Sans:wght@400;500;600"
-primary_font = "Lato:wght@400"
+primary_font = "Cabin:wght@400"
 primary_font_type = "sans-serif" # [serif/sans-serif]
 icon_font = "Font Awesome 5 Free"
 
 
 ############################# Plugins ##############################
 # CSS Plugins
-[[params.plugins.css]]
-link = "plugins/bootstrap/bootstrap.min.css"
-[[params.plugins.css]]
-link = "plugins/slick/slick.css"
+# [[params.plugins.css]]
+# link = "plugins/bootstrap/bootstrap.min.css"
+# [[params.plugins.css]]
+# link = "plugins/slick/slick.css"
 # [[params.plugins.css]]
 # link = "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/fontawesome.min.css"
 # [[params.plugins.css]]

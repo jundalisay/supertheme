@@ -1,6 +1,7 @@
 <meta charset="utf-8">
 <title>{{.Title | default site.Title}}</title>
 <meta name="description" content="{{ .Description }}"/>
+
 <!-- base url -->
 {{ if or (eq site.BaseURL "/") (eq site.BaseURL "http://localhost:1313/") (eq site.BaseURL "http://superphysics.one/") }}{{else}}
 <base href="{{ site.BaseURL }}">
